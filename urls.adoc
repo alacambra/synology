@@ -1,0 +1,92 @@
+= Synology API
+== Generic call
+GET /webapi/<CGI_PATH>?api=<API_NAME>&version=<VERSION>&method=<METHOD>[&<PARAMS>][&_si d=<SID>]
+
+== Auth
+http://lacambra.de/webapi/auth.cgi?api=SYNO.API.Auth&version=3&method=login&account=alacambra&passwd=p.0rt4v3ntur?4&session=FileStation&format=cookie
+
+== Query and Get infiormation about a service
+http://lacambra.de/webapi/query.cgi?api=SYNO.API.Info&version=1&method=query&query=all
+
+=== Example
+http://lacambra.de/webapi/query.cgi?api=SYNO.API.Info&version=1&method=query&query=SYNO.Backup.Target
+
+http://lacambra.de/webapi/entry.cgi?api=SYNO.FileStation.List&version=2&method=list_share
+
+http://lacambra.de/webapi/query.cgi?api=SYNO.API.Info&version=1&method=query&query=SYNO.FileStation.List
+http://lacambra.de/webapi/query.cgi?api=SYNO.API.Info&version=1&method=query&query=SYNO.Finder.FileIndexing.Folder
+
+== Listing
+http://lacambra.de/webapi/entry.cgi?api=SYNO.FileStation.List&version=2&method=list_share
+
+http://lacambra.de/webapi/entry.cgi?api=SYNO.FileStation.List&version=2&method=list&folder_path=/downloader-albert/video
+
+http://lacambra.de/webapi/entry.cgi?api=SYNO.Finder.FileIndexing.Folder&version=1&method=
+
+
+== Enter directory:
+
+Request URL:https://lacambra.de/file/webapi/entry.cgi
+Request method:POST
+Remote address:192.168.1.25:443
+Status code:
+200
+Version:HTTP/2.0
+Referrer Policy:no-referrer-when-downgrade
+
+offset=0&limit=1000&sort_by=%22name%22&sort_direction=%22ASC%22&action=%22list%22&check_dir=true&additional=%5B%22real_path%22%2C%22size%22%2C%22owner%22%2C%22time%22%2C%22perm%22%2C%22type%22%2C%22mount_point_type%22%2C%22description%22%2C%22indexed%22%5D&filetype=%22all%22&folder_path=%22%2Fhome%22&api=SYNO.FileStation.List&method=list&version=2
+
+
+== Upload file:
+
+[source]
+----
+https://lacambra.de/file/webapi/entry.cgi?api=SYNO.FileStation.Upload&method=upload&version=2
+
+Host: lacambra.de
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:70.0) Gecko/20100101 Firefox/70.0
+Accept: */*
+Accept-Language: ca,en-US;q=0.7,en;q=0.3
+Accept-Encoding: gzip, deflate, br
+Content-Type: multipart/form-data; boundary=---------------------------400214434485209834926272379
+Content-Length: 2331
+Origin: https://lacambra.de
+Connection: keep-alive
+Referer: https://lacambra.de/file/
+Cookie: stay_login=1; smid=V9paj4N5-Lc37NdE60KVmsWflcE6Z9Js1gOovi4bTZAfjflOMynD5LpIUSm2i-DAI7jkOMlWxGdMAd99rK4lMA; id=.NHb.YNbTj4Fo1640NMN474601; io=HSgQaRWFyjH6LgIxAALG
+Pragma: no-cache
+Cache-Control: no-cache
+TE: Trailers
+----
+
+.Query String:
+[source, json]
+----
+{"Query string":{"api":"SYNO.FileStation.Upload","method":"upload","version":"2"}
+----
+
+.BODY
+[source]
+Content-Disposition: form-data; name=\"mtime\"
+
+1515614935000
+-----------------------------400214434485209834926272379
+Content-Disposition: form-data; name=\"overwrite\"
+
+true
+-----------------------------400214434485209834926272379
+Content-Disposition: form-data; name=\"path\"
+
+/home/albert
+-----------------------------400214434485209834926272379
+Content-Disposition: form-data; name=\"size\"
+
+1653
+-----------------------------400214434485209834926272379
+Content-Disposition: form-data; name=\"file\"; filename=\"pom.xml\"
+Content-Type: text/xml
+
+(or Content-Disposition: form-data; name="file"; filename="Hoy por hoy (11_11_2019 - Tramo de 9_00 a 10_00).mp3"
+Content-Type: audio/mpeg)
+
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n    <modelVersion>4.0.0</modelVersion>\n\n    <groupId>io.blockchainunchained.fabric</groupId>\n    <artifactId>chaincode</artifactId>\n    <version>1.0-SNAPSHOT</version>\n\n    <parent>\n        <artifactId>all</artifactId>\n        <groupId>io.blockchainunchained</groupId>\n        <version>1.0-SNAPSHOT</version>\n    </parent>\n\n    <properties>\n        <maven.compiler.source>1.8</maven.compiler.source>\n        <maven.compiler.target>1.8</maven.compiler.target>\n    </properties>\n\n    <dependencies>\n        <dependency>\n            <groupId>org.hyperledger</groupId>\n            <artifactId>shim-client</artifactId>\n            <version>1.0</version>\n        </dependency>\n        <dependency>\n            <groupId>org.glassfish</groupId>\n            <artifactId>javax.json</artifactId>\n            <version>1.1</version>\n        </dependency>\n        <dependency>\n            <groupId>io.blockchainunchained</groupId>\n            <artifactId>commons</artifactId>\n            <version>1.0-SNAPSHOT</version>\n        </dependency>\n        <dependency>\n            <groupId>junit</groupId>\n            <artifactId>junit</artifactId>\n            <version>4.12</version>\n        </dependency>\n        <dependency>\n            <groupId>org.mockito</groupId>\n            <artifactId>mockito-all</artifactId>\n            <version>1.10.19</version>\n        </dependency>\n    </dependencies>\n</project>
